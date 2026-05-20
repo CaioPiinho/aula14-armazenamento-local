@@ -108,4 +108,4 @@ Sistema de preferência de idioma utilizando Cookies com validade de 14 dias.
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/aula14-armazenamento-local.git
+git clone https://github.com/CaioPiinho/aula14-armazenamento-local.git

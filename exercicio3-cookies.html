@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferência de Idioma - Cookies</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #4facfe;
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #4facfe;
+      padding-bottom: 10px;
+    }
+
+    .language-selector {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      display: flex;
+      gap: 15px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .selector-group {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #4facfe;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .btn-save {
+      background: #4facfe;
+      color: white;
+    }
+
+    .btn-remove {
+      background: #f44336;
+      color: white;
+    }
+
+    .content {
+      margin-top: 30px;
+    }
+
+    .card {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      color: #4facfe;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .info-message {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #4facfe;
+      margin: 20px 0;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .feedback-success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="tituloPrincipal">🌐 Preferência de Idioma</h1>
+    <div class="subtitle" id="subtituloPrincipal">Escolha seu idioma preferido</div>
+
+    <div class="language-selector">
+      <div class="selector-group">
+        <label id="labelIdioma">Idioma / Language:</label>
+        <select id="idiomaSelect">
+          <option value="pt">🇧🇷 Português</option>
+          <option value="en">🇺🇸 English</option>
+        </select>
+      </div>
+      <button class="btn-save" onclick="salvarPreferencia()" id="btnSalvar">💾 Salvar preferência</button>
+      <button class="btn-remove" onclick="removerPreferencia()" id="btnRemover">🗑️ Remover preferência</button>
+    </div>
+
+    <div class="content">
+      <div class="card">
+        <h2 id="tituloCard1">Bem-vindo ao nosso site!</h2>
+        <p id="textoCard1">Este site utiliza cookies para lembrar sua preferência de idioma. O cookie expira em 14 dias.</p>
+      </div>
+
+      <div class="card">
+        <h2 id="tituloCard2">Sobre os Cookies</h2>
+        <p id="textoCard2">Cookies são pequenos arquivos salvos no seu navegador. Neste exemplo, salvamos sua preferência de idioma por 14 dias.</p>
+      </div>
+
+      <div class="info-message" id="mensagemInfo">
+        💡 Selecione seu idioma preferido, salve e recarregue a página. Sua escolha será lembrada!
+      </div>
+    </div>
+
+    <div id="feedback" class="feedback"></div>
+
+    <footer>
+      <strong>Por que Cookies?</strong> Ideal para preferências do usuário que precisam persistir por um período específico (ex: 14 dias).
+    </footer>
+  </div>
+
+  <script>
+    const textos = {
+      pt: {
+        tituloPrincipal: "🌐 Preferência de Idioma",
+        subtituloPrincipal: "Escolha seu idioma preferido",
+        labelIdioma: "Idioma / Language:",
+        btnSalvar: "💾 Salvar preferência",
+        btnRemover: "🗑️ Remover preferência",
+        tituloCard1: "Bem-vindo ao nosso site!",
+        textoCard1: "Este site utiliza cookies para lembrar sua preferência de idioma. O cookie expira em 14 dias.",
+        tituloCard2: "Sobre os Cookies",
+        textoCard2: "Cookies são pequenos arquivos salvos no seu navegador. Neste exemplo, salvamos sua preferência de idioma por 14 dias.",
+        mensagemInfo: "💡 Selecione seu idioma preferido, salve e recarregue a página. Sua escolha será lembrada!"
+      },
+      en: {
+        tituloPrincipal: "🌐 Language Preference",
+        subtituloPrincipal: "Choose your preferred language",
+        labelIdioma: "Language:",
+        btnSalvar: "💾 Save preference",
+        btnRemover: "🗑️ Remove preference",
+        tituloCard1: "Welcome to our website!",
+        textoCard1: "This website uses cookies to remember your language preference. The cookie expires in 14 days.",
+        tituloCard2: "About Cookies",
+        textoCard2: "Cookies are small files saved in your browser. In this example, we save your language preference for 14 days.",
+        mensagemInfo: "💡 Select your preferred language, save it, and reload the page. Your choice will be remembered!"
+      }
+    };
+
+    function setCookie(nome, valor, dias) {
+      const date = new Date();
+      date.setTime(date.getTime() + (dias * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = nome + "=" + valor + ";" + expires + ";path=/";
+    }
+
+    function getCookie(nome) {
+      const name = nome + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookieArray = decodedCookie.split(';');
+
+      for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) === ' ') {
+          cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+          return cookie.substring(name.length, cookie.length);
+        }
+      }
+      return "";
+    }
+
+    function deleteCookie(nome) {
+      document.cookie = nome + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+    function aplicarIdioma(idioma) {
+      document.getElementById("tituloPrincipal").textContent = textos[idioma].tituloPrincipal;
+      document.getElementById("subtituloPrincipal").textContent = textos[idioma].subtituloPrincipal;
+      document.getElementById("labelIdioma").textContent = textos[idioma].labelIdioma;
+      document.getElementById("btnSalvar").textContent = textos[idioma].btnSalvar;
+      document.getElementById("btnRemover").textContent = textos[idioma].btnRemover;
+      document.getElementById("tituloCard1").textContent = textos[idioma].tituloCard1;
+      document.getElementById("textoCard1").textContent = textos[idioma].textoCard1;
+      document.getElementById("tituloCard2").textContent = textos[idioma].tituloCard2;
+      document.getElementById("textoCard2").textContent = textos[idioma].textoCard2;
+      document.getElementById("mensagemInfo").textContent = textos[idioma].mensagemInfo;
+    }
+
+    function mostrarFeedback(mensagem, tipo) {
+      const feedbackDiv = document.getElementById("feedback");
+      feedbackDiv.textContent = mensagem;
+      feedbackDiv.className = `feedback feedback-${tipo}`;
+      setTimeout(() => {
+        if (feedbackDiv.textContent === mensagem) {
+          feedbackDiv.style.opacity = "0";
+          setTimeout(() => {
+            feedbackDiv.textContent = "";
+            feedbackDiv.style.opacity = "1";
+            feedbackDiv.className = "feedback";
+          }, 300);
+        }
+      }, 3000);
+    }
+
+    function salvarPreferencia() {
+      const idiomaSelecionado = document.getElementById("idiomaSelect").value;
+      setCookie("idioma", idiomaSelecionado, 14);
+      aplicarIdioma(idiomaSelecionado);
+
+      const mensagem = idiomaSelecionado === "pt" ?
+        "✅ Preferência de idioma salva com sucesso por 14 dias!" :
+        "✅ Language preference saved successfully for 14 days!";
+      mostrarFeedback(mensagem, "success");
+    }
+
+    function removerPreferencia() {
+      deleteCookie("idioma");
+      aplicarIdioma("pt");
+      document.getElementById("idiomaSelect").value = "pt";
+
+      mostrarFeedback("🗑️ Preferência removida! Idioma voltou ao Português.", "success");
+    }
+
+    function carregarPreferencia() {
+      const idiomaSalvo = getCookie("idioma");
+      if (idiomaSalvo && (idiomaSalvo === "pt" || idiomaSalvo === "en")) {
+        document.getElementById("idiomaSelect").value = idiomaSalvo;
+        aplicarIdioma(idiomaSalvo);
+        mostrarFeedback(idiomaSalvo === "pt" ?
+          "🌐 Idioma carregado do cookie!" :
+          "🌐 Language loaded from cookie!", "success");
+      } else {
+        aplicarIdioma("pt");
+        mostrarFeedback("ℹ️ Nenhuma preferência salva. Usando Português como padrão.", "success");
+      }
+    }
+
+    carregarPreferencia();
+  </script>
+</body>
+
+</html>
